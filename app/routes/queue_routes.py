@@ -1,7 +1,7 @@
 from ..data import data
 from flask import jsonify, request, Blueprint, abort
 from queue import Queue
-
+from ..helpers.auth import verify_token
 queue = Blueprint('queue', __name__)
 
 
@@ -12,6 +12,12 @@ def post():
     name = r['name']
     if not id or not name:
         abort(400)
+
+    token = request.headers["access_token"]
+    permissions = verify_token(token)
+
+    if permissions["get_message"]:
+        abort(403)
 
     for queue in data['queues']:
         if queue['id'] == id:
@@ -35,6 +41,13 @@ def delete(id):
         print(id)
         print(data['queues'])
         abort(400)
+
+    token = request.headers["access_token"]
+    permissions = verify_token(token)
+
+    if permissions["get_message"]:
+        abort(403)
+
     data['queues'] = [x for x in data['queues'] if not x['id'] == id]
     response = {
         "id": queues[0]['id'],
