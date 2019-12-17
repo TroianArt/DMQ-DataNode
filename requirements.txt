@@ -1,3 +1,5 @@
+PyJWT
 requests
 Flask
 Flask-RESTful
+Flask-JWT==0.3.2
