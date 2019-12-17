@@ -14,9 +14,9 @@ def post():
         abort(400)
 
     token = request.headers["access_token"]
-    permission = verify_token(token)
+    permissions = verify_token(token)
 
-    if permission["get_message"]:
+    if permissions["get_message"]:
         abort(403)
 
     for queue in data['queues']:
@@ -43,9 +43,9 @@ def delete(id):
         abort(400)
 
     token = request.headers["access_token"]
-    permission = verify_token(token)
+    permissions = verify_token(token)
 
-    if permission["get_message"]:
+    if permissions["get_message"]:
         abort(403)
 
     data['queues'] = [x for x in data['queues'] if not x['id'] == id]

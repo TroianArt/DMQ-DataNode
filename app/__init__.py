@@ -7,5 +7,8 @@ app = Flask(__name__)
 app.config.from_object('config.default.Config')
 app.register_blueprint(queue)
 
+CONNECTED = False
+rsa_key = None
+
 api = Api(app)
 api.add_resource(Message, '/queues/<string:queue_id>/messages/')
