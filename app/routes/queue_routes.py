@@ -15,7 +15,7 @@ def post():
 
     token = request.headers["access_token"]
     permissions = verify_token(token)
-
+    print(permissions)
     if permissions["get_message"]:
         abort(403)
 
