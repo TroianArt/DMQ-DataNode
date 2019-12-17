@@ -1,8 +1,8 @@
-from flask import Flask, jsonify, request
-from flask_restful import Api, Resource
+from flask import Flask
+from .routes.queue_routes import queue
 
 app = Flask(__name__)
 
 app.config.from_object('config.default.Config')
 
-api = Api(app)
+app.register_blueprint(queue)
